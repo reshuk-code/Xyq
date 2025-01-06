@@ -7,5 +7,5 @@
 <li>Node.Js</li>
 <li>MongoDB</li>
 
-<p>Just for fun thing were your can add name and that names will be saved at MongoDB !</p>
-<p>a Toast wiil occur after adding name on DB</p>
+<p>Just for fun thing were your can add name and that names will be saved at MongoDB ! <br>
+a Toast wiil occur after adding name on DB</p>
