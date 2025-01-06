@@ -7,34 +7,33 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-  origin: process.env.FRONTEND, // Only allow requests from this domain
-  methods: ['GET', 'POST'], // Allow only specific methods (optional)
-  allowedHeaders: ['Content-Type'], // Allow specific headers (optional)
+  origin: process.env.FRONTEND,
+  methods: ['GET', 'POST'], 
+  allowedHeaders: ['Content-Type'], 
 };
 
-// Apply CORS middleware with the options
+
 app.use(cors(corsOptions));
 
 
 
-// Log the Mongo URI to ensure it's being loaded correctly
+
 console.log('Mongo URI:', process.env.MONGO_URI);
 
-// Connect to MongoDB using Mongoose
+
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  ssl: true, // Ensure SSL is enabled
+  ssl: true,
 })
   .then(() => {
     console.log('Connected to MongoDB using Mongoose');
   })
   .catch((err) => {
     console.error('Error connecting to MongoDB:', err);
-    process.exit(1); // Exit the application on failure
+    process.exit(1); 
   });
 
-// Define Mongoose Schema and Model
 const UsernameSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -73,7 +72,7 @@ app.post('/savednames', async (req, res) => {
   }
 });
 
-// Start the server
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
