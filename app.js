@@ -2,11 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
+const path = require('path');
 const app = express();
 app.use(express.json());
 app.use(cors()); // Ensure CORS is applied correctly
-
+app.use(express.static(path.join(__dirname, 'views')));
 // Connect to MongoDB using Mongoose
 (async () => {
     try {
@@ -33,7 +33,7 @@ const Username = mongoose.model('Username', UsernameSchema);
 
 // Routes
 app.get('/', (req, res) => {
-    res.send('APP RUNNING');
+     res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
 app.post('/savednames', async (req, res) => {
