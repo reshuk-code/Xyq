@@ -14,8 +14,8 @@
                 Toast.classList.remove('show');
                 setTimeout(() => {
                     Toast.style.display = 'none';
-                }, 1000); // After fade-out completes, hide the toast
-            }, 3000); // Toast stays for 3 seconds
+                }, 1000); 
+            }, 3000); 
         }
 
 
