@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practicing MongoDB (CURD)</title>
+    <style>
+        *{margin:0;padding:0;font-family: Arial;}body{background: darkgrey;height: 100vh;width: 100%;}form{background: red;  width: fit-content; position: absolute;top:50%;left:50%;transform: translate(-50%,-50%);padding: 1rem 0.5rem; display: flex;}
+        input{border:1px #000 solid;background: #ece6e6f7;padding: 0.9rem; font-size: 2rem;outline-color: purple;}button{padding: 0.9rem;font-size: 2rem;cursor: pointer;}.toast{background: white;position: relative;float: right;padding: 1rem;font-size: 1rem;cursor: pointer; margin-top: 1rem;transition: 5s ease-in;}.toast-success{color:green}
+        .toast-error{color:red}
+    </style>
+</head>
+
+<body>
+    <div class="toast">
+        <h5 class="toast-message">Username Added Sucessfully</h5>
+    </div>
+    <form id="userForm">
+        <input type="text" placeholder="your goodname?" id="username" required>
+        <button id="btn" type="submit">add</button>
+    </form>
+    <script>
+        const submitBtn = document.getElementById('btn')
+        const form = document.querySelector('#userForm')
+        const Toast = document.querySelector('.toast')
+        const toastMessage = document.querySelector('.toast-message');
+       Toast.style.display = 'none'
+        function showToast(message, isSuccess) {
+            Toast.style.display = 'block';
+            toastMessage.textContent = message;
+            Toast.classList.add(isSuccess ? 'toast-success' : 'toast-error');
+            Toast.classList.add('show');
+            
+            setTimeout(() => {
+                Toast.classList.remove('show');
+                setTimeout(() => {
+                    Toast.style.display = 'none';
+                }, 1000); // After fade-out completes, hide the toast
+            }, 3000); // Toast stays for 3 seconds
+        }
+
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault()
+
+            const username = document.getElementById('username').value
+
+            try {
+                const response = await fetch('http://localhost:3000/savednames', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username })
+                })
+
+                if (response.ok) {
+                    const data = await response.json()
+                    console.log(data)
+                    showToast(`${username} Added Sucessfully` , true)
+                } else {
+                    throw new Error('something went wrong')
+                }
+            } catch (error) {
+                console.log(error)
+                showToast(error.message, false)
+            }
+            document.getElementById('username').value = ''
+        })
+        // toast handeling
+        Toast.addEventListener('click' , ()=>{
+             Toast.style.display = 'none'
+        })      
+
+    </script>
+</body>
+
+</html>
