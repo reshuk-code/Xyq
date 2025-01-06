@@ -5,7 +5,17 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-app.use(cors()); // Ensure CORS is applied correctly
+
+const corsOptions = {
+  origin: process.env.FRONTEND, // Only allow requests from this domain
+  methods: ['GET', 'POST'], // Allow only specific methods (optional)
+  allowedHeaders: ['Content-Type'], // Allow specific headers (optional)
+};
+
+// Apply CORS middleware with the options
+app.use(cors(corsOptions));
+
+
 
 // Log the Mongo URI to ensure it's being loaded correctly
 console.log('Mongo URI:', process.env.MONGO_URI);
