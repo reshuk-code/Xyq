@@ -2,17 +2,22 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-//const path = require('path');
+
 const app = express();
 app.use(express.json());
 app.use(cors()); // Ensure CORS is applied correctly
-//app.use(express.static(path.join(__dirname, 'views')));
+
+// Log the Mongo URI to ensure it's being loaded correctly
+console.log('Mongo URI:', process.env.MONGO_URI);
+
 // Connect to MongoDB using Mongoose
 (async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
+            ssl: true, // Ensure SSL is enabled
+            sslValidate: false, // Temporarily disable SSL certificate validation for testing
         });
         console.log('Connected to MongoDB using Mongoose');
     } catch (err) {
@@ -33,7 +38,7 @@ const Username = mongoose.model('Username', UsernameSchema);
 
 // Routes
 app.get('/', (req, res) => {
-     res.send('Working')
+    res.send('Working');
 });
 
 app.post('/savednames', async (req, res) => {
