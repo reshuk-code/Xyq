@@ -71,7 +71,16 @@ app.post('/savednames', async (req, res) => {
     }
   }
 });
+app.get('/usernames' , async (req,res)=>{
+    try {
+        const usernames = await Username.find()
+        res.status(200).json(usernames)
+    } catch (err){
+        console.log("error fetching username:' error")
+        res.status(500).json({message: "Something happens"})
+    }
 
+})
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
