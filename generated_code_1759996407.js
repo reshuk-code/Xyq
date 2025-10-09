@@ -1,18 +1,24 @@
 ```javascript
-// Simple utility function: generate a random hex color
+function guessTheNumber() {
+  const secretNumber = Math.floor(Math.random() * 100) + 1;
+  let guess;
+  let attempts = 0;
 
-function getRandomHexColor() {
-  return '#' + Math.floor(Math.random() * 16777215).toString(16);
+  while (guess !== secretNumber) {
+    guess = parseInt(prompt("Guess a number between 1 and 100:"));
+    attempts++;
+
+    if (isNaN(guess)) {
+      alert("Invalid input. Please enter a number.");
+    } else if (guess < secretNumber) {
+      alert("Too low!");
+    } else if (guess > secretNumber) {
+      alert("Too high!");
+    } else {
+      alert(`Congratulations! You guessed the number ${secretNumber} in ${attempts} attempts.`);
+    }
+  }
 }
 
-// Example usage (optional):
-// console.log(getRandomHexColor());
-
-// Small DOM manipulation script: change background color on click
-
-document.addEventListener('DOMContentLoaded', function() {
-  document.body.addEventListener('click', function() {
-    document.body.style.backgroundColor = getRandomHexColor();
-  });
-});
+// guessTheNumber(); // Uncomment to play the game.
 ```
